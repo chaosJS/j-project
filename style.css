@@ -1,0 +1,106 @@
+body {
+    color: #3d4451;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    background-color: #efefef;
+	margin:0 auto;
+}
+
+.header {
+    position: relative;
+    margin-bottom: 75px;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+	margin-bottom: 40px;
+}
+.head-bg{
+	    height: 515px;
+		display: block;
+		top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    display: black;
+    position: absolute;
+    background-size: cover;
+    background-color: #242832;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.head-bg:before {
+    background-color: rgba(44, 51, 64, 0.8);
+
+	content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+ 
+}
+
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.topNavBar {
+  padding: 20px 16px 20px 16px;
+    z-index: 3;
+    background-color: transparent;
+    box-shadow: none;
+    opacity: 1;
+    visibility: visible;
+    -webkit-transform: translate(0, 0);
+    -moz-transform: translate(0, 0);
+    transform: translate(0, 0);
+    position: relative;
+}
+.topNavBar > nav {
+  padding-top: 7px;
+}
+.topNavBar > nav > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.topNavBar > nav > ul > li {
+  float: left;
+  margin-left: 17px;
+  margin-right: 17px;
+}
+.topNavBar > nav > ul > li > a {
+  font-size: 12px;
+  color: #b7b7b7;
+  font-weight: bold;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: block;
+}
+.topNavBar > nav > ul > li > a:hover {
+  border-bottom: 3px solid #e06567;
+}
+
+.topNavBar .logo {
+  font-size: 24px;
+  font-family: 'Arial Black';
+  padding-top: 3px;
+  padding-bottom: 4px;
+}
+.topNavBar .logo .rs {
+  margin-right: 4px;
+  color: #e6686a;
+}
+.topNavBar .logo .card {
+  color: #9a9da2;
+}
