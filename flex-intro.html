@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box {
+            display: flex;
+            border: 1px solid red;
+            /* 子元素排列方向 */
+            flex-direction: row;
+            /* 子元素 过多会不会换行 nowrap | wrap | wrap-reverse;*/
+            flex-wrap: wrap;
+            /* flex-direction 和flex-wrap的合写 */
+            flex-flow: row wrap;
+            /* 子元素在主轴上的对齐方式 ：flex-start | flex-end | center(水平居中) | space-between | space-around;*/
+            justify-content: center;
+            /* align-items 子元素在纵轴上如何对齐。center  垂直居中*/
+            align-items: center;
+        }
+
+        .child {
+            width: 200px;
+            height: 200px;
+            vertical-align: middle;
+            margin: 5px;
+            background-color: #ffd200;
+
+            /* 子元素属性  */
+            /* 最常用： */
+            flex: 1;
+        }
+
+        .child:nth-child(odd) {
+            width: 200px;
+            height: 400px;
+            vertical-align: middle;
+            margin: 5px;
+            background-color: #ffd200;
+        }
+
+
+
+        .wrapper {
+            padding: 20px;
+            border: 1px solid #363636;
+            background-color: #000;
+            display: flex;
+            justify-content: row;
+
+
+        }
+
+        .container {
+            background-color: #fff;
+            width: 200px;
+            height: 200px;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin: 5px;
+
+        }
+
+        .item {
+            width: 50px;
+            height: 50px;
+            background-color: #000;
+            border-radius: 50%;
+            margin: 5px;
+        }
+
+        .container1 {
+            display: flex;
+
+            /* 一个点 垂直水平居中 */
+            justify-content: center;
+            align-items: center;
+            /* end */
+        }
+
+        .container2 {
+
+            display: flex;
+
+            /* 两个个点  */
+            justify-content: space-between;
+            align-items: center;
+            /* end */
+        }
+
+        .container3 {
+            display: flex;
+
+        }
+
+        .container3 .item:nth-child(2) {
+            align-self: center;
+        }
+
+        .container3 .item:nth-child(3) {
+            align-self: flex-end;
+        }
+
+        .container4 {
+            display: flex;
+        }
+
+        .container4 .item:nth-child(2) {
+            align-self: flex-end;
+        }
+
+        .container4 .item:nth-child(4) {
+            align-self: flex-end;
+        }
+
+        .container6 {
+            display: flex;
+            flex-wrap: wrap;
+            align-content: space-between;
+            justify-content: space-around;
+        }
+
+        .container9 {
+            display: flex;
+            flex-wrap: wrap;
+            align-content: space-between;
+            justify-content: space-around;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="child">1</div>
+        <div class="child">2</div>
+        <div class="child">3</div>
+        <div class="child">4</div>
+        <div class="child">5</div>
+        <div class="child">6</div>
+        <div class="child">7</div>
+        <div class="child">8</div>
+
+    </div>
+
+    <div class="wrapper">
+        <div class="container container1">
+            <span class="item"></span>
+        </div>
+        <div class="container container2">
+            <span class="item"></span>
+            <span class="item"></span>
+        </div>
+
+        <div class="container container3">
+            <span class="item"></span>
+            <span class="item"></span>
+            <span class="item"></span>
+        </div>
+
+        <div class="container container4">
+            <span class="item"></span>
+            <span class="item"></span>
+            <span class="item"></span>
+            <span class="item"></span>
+        </div>
+
+
+        <div class="container container6">
+            <span class="item"></span>
+            <span class="item"></span>
+            <span class="item"></span>
+            <span class="item"></span>
+            <span class="item"></span>
+            <span class="item"></span>
+        </div>
+
+        <div class="container container9">
+            <span class="item"></span>
+            <span class="item"></span>
+            <span class="item"></span>
+            <span class="item"></span>
+            <span class="item"></span>
+            <span class="item"></span>
+            <span class="item"></span>
+            <span class="item"></span>
+            <span class="item"></span>
+
+        </div>
+
+    </div>
+
+    <!-- todo flex 布局 -->
+
+    <script>
+
+    </script>
+</body>
+
+</html>
