@@ -10,7 +10,7 @@
 	
 4. background-image:cover;  把背景图片放大到适合元素容器的尺寸，图片比例不变	
 5. 行内垂直水平居中，从内往外设置css，设置padding，不要设置宽高
-
+6. 所有非空标签都有伪类
 
 CSS 学习资源
 Google: 关键词 MDN
@@ -23,5 +23,10 @@ CSS 2.1 中文 spec
 Magic of CSS 免费在线书
 
 css太极：http://js.jirengu.com/dunixajiri
+
+
 PS
 	1. 开发中尽量不要设置width和height,用max/min-width/height
+	
+空页面：	gy395p4w 
+	4h21h3eb
