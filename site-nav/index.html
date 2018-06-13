@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>site-nav-demo</title>
+</head>
+
+<body>
+    <header></header>
+    <main id="main"></main>
+    <footer></footer>
+
+    <script>
+        let keysInfo = {
+            row1: [
+
+            ],
+            row2: [
+
+            ],
+            row3: [
+
+            ],
+        }
+
+        function fillkeysInfo() {
+            let str1 = 'qwertyuiop';
+            let str2 = 'asdfghjkl';
+            let str3 = 'zxcvbnm';
+
+            str1.split('').map((str) => {
+                let key = str;
+                let url = '';
+                keysInfo.row1.push({ key, url })
+            })
+            str2.split('').map((str) => {
+                let key = str;
+                let url = '';
+                keysInfo.row2.push({ key, url })
+            })
+            str3.split('').map((str) => {
+                let key = str;
+                let url = '';
+                keysInfo.row3.push({ key, url })
+            })
+        }
+        fillkeysInfo();
+        for (let key in keysInfo) {
+            let outerDiv = document.createElement('div');
+            let row = keysInfo[key];
+            row.map((item) => {
+                let kbd = document.createElement('kbd');
+                kbd.textContent = item.key;
+                outerDiv.appendChild(kbd);
+            })
+            let main = document.getElementById('main');
+            main.appendChild(outerDiv);
+
+        }
+
+    </script>
+</body>
+
+</html>
