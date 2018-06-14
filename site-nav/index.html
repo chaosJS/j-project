@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>site-nav-demo</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
     <header></header>
-    <main id="main"></main>
+    <main id="main" tabIndex=-1 class="wrapper"></main>
     <footer></footer>
 
     <script>
@@ -25,7 +26,26 @@
 
             ],
         }
-
+        let hash = {
+            'q': 'qq.com',
+            'w': 'weibo.com',
+            'e': 'ele.me',
+            'r': 'renren.com',
+            't': 'tianya.com',
+            'y': 'youtube.com',
+            'u': 'uc.com',
+            'i': 'iqiyi.com',
+            'o': 'opera.com',
+            'p': undefined,
+            'a': 'acfun.tv',
+            's': 'sohu.com',
+            'z': 'zhihu.com',
+            'm': 'www.mcdonalds.com.cn'
+        }
+        let localStorageHash = JSON.parse(localStorage.getItem('hash' || ''));
+        if (localStorageHash) {
+            hash = localStorageHash;
+        }
         function fillkeysInfo() {
             let str1 = 'qwertyuiop';
             let str2 = 'asdfghjkl';
@@ -48,19 +68,46 @@
             })
         }
         fillkeysInfo();
+        let main = document.getElementById('main');
         for (let key in keysInfo) {
             let outerDiv = document.createElement('div');
             let row = keysInfo[key];
             row.map((item) => {
                 let kbd = document.createElement('kbd');
                 kbd.textContent = item.key;
+                let btn = document.createElement('button');
+                btn.id = item.key;
+                btn.textContent = '编辑';
+                kbd.appendChild(btn);
                 outerDiv.appendChild(kbd);
+                btn.onclick = function (e) {
+                    let key = e.target.id;
+                    let userSite = prompt('请输入网址');
+                    hash[key] = userSite;
+
+                    //存入localStorage
+                    localStorage.setItem('hash', JSON.stringify(hash));
+                }
             })
-            let main = document.getElementById('main');
             main.appendChild(outerDiv);
 
         }
+        /*
+        能够响应键盘事件的元素是有限的，它们是：form元素、a标签元素，window、document这样的元素；
+        
+        但其它元素如果想响应键盘事件则必须具备两个基本要素：
+        
+        1、 具有tabindex属性
+        
+        2、  获取焦点； */
+        main.onkeypress = function (e) {
+            let key = e.key;
+            let site = 'http://' + hash[key];
+            window.open(site)
+            // location.href = + site;
+            console.log(hash[key])
 
+        }
     </script>
 </body>
 
