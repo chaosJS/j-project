@@ -42,7 +42,7 @@
             'z': 'zhihu.com',
             'm': 'www.mcdonalds.com.cn'
         }
-        let localStorageHash = JSON.parse(localStorage.getItem('hash' || ''));
+        let localStorageHash = JSON.parse(localStorage.getItem('hash' || 'null'));
         if (localStorageHash) {
             hash = localStorageHash;
         }
