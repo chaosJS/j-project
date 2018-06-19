@@ -1,113 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hans">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>site-nav-demo</title>
+    <title>site-nav</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
     <header></header>
-    <main id="main" tabIndex=-1 class="wrapper"></main>
+    <main>
+        <div class="wrapper" id="main">
+
+        </div>
+    </main>
     <footer></footer>
-
     <script>
-        let keysInfo = {
-            row1: [
 
-            ],
-            row2: [
+        // 1. 初始化数据
+        var hashA = init()
+        var keys = hashA['keys']
+        var hash = hashA['hash']
 
-            ],
-            row3: [
+        // 2. 生成键盘
+        // 遍历 keys，生成 kbd 标签
+        generateKeyboard(keys, hash)
 
-            ],
+        // 3. 监听用户动作
+        listenToUser(hash)
+
+        // 下面是工具函数
+        function getFromLocalStorage(name) {
+            return JSON.parse(localStorage.getItem(name) || 'null')
         }
-        let hash = {
-            'q': 'qq.com',
-            'w': 'weibo.com',
-            'e': 'ele.me',
-            'r': 'renren.com',
-            't': 'tianya.com',
-            'y': 'youtube.com',
-            'u': 'uc.com',
-            'i': 'iqiyi.com',
-            'o': 'opera.com',
-            'p': undefined,
-            'a': 'acfun.tv',
-            's': 'sohu.com',
-            'z': 'zhihu.com',
-            'm': 'www.mcdonalds.com.cn'
-        }
-        let localStorageHash = JSON.parse(localStorage.getItem('hash' || 'null'));
-        if (localStorageHash) {
-            hash = localStorageHash;
-        }
-        function fillkeysInfo() {
-            let str1 = 'qwertyuiop';
-            let str2 = 'asdfghjkl';
-            let str3 = 'zxcvbnm';
 
-            str1.split('').map((str) => {
-                let key = str;
-                let url = '';
-                keysInfo.row1.push({ key, url })
-            })
-            str2.split('').map((str) => {
-                let key = str;
-                let url = '';
-                keysInfo.row2.push({ key, url })
-            })
-            str3.split('').map((str) => {
-                let key = str;
-                let url = '';
-                keysInfo.row3.push({ key, url })
-            })
+        function tag(tagName) {
+            return document.createElement(tagName)
         }
-        fillkeysInfo();
-        let main = document.getElementById('main');
-        for (let key in keysInfo) {
-            let outerDiv = document.createElement('div');
-            let row = keysInfo[key];
-            row.map((item) => {
-                let kbd = document.createElement('kbd');
-                kbd.textContent = item.key;
-                let btn = document.createElement('button');
-                btn.id = item.key;
-                btn.textContent = '编辑';
-                kbd.appendChild(btn);
-                outerDiv.appendChild(kbd);
-                btn.onclick = function (e) {
-                    let key = e.target.id;
-                    let userSite = prompt('请输入网址');
-                    hash[key] = userSite;
 
-                    //存入localStorage
-                    localStorage.setItem('hash', JSON.stringify(hash));
+        function createSpan(textContent) {
+            var span = tag('span')
+            span.textContent = textContent
+            span.className = "text"
+            return span
+        }
+        function createButton(id) {
+            var button = tag('button')
+            button.textContent = 'E'
+            button.id = id;
+            button.title = "编辑"
+            button.onclick = function (xzkjcnxlkcjlk) {
+                // xzkjcnxlkcjlk['target'] 就是用户点击的元素
+                var button2 = xzkjcnxlkcjlk['target']
+                var img2 = button2.previousSibling
+                var key = button2['id'] // q w e r t
+                var x = prompt('给我一个网址') // qq.com
+                hash[key] = x  // hash 变更
+                img2.src = 'http://' + x + '/favicon.ico'
+                img2.onerror = function (xxx) {
+                    xxx.target.src = 'https://i.loli.net/2017/11/10/5a05afbc5e183.png'
                 }
-            })
-            main.appendChild(outerDiv);
-
+                localStorage.setItem('zzz', JSON.stringify(hash))
+            }
+            return button
         }
-        /*
-        能够响应键盘事件的元素是有限的，它们是：form元素、a标签元素，window、document这样的元素；
-        
-        但其它元素如果想响应键盘事件则必须具备两个基本要素：
-        
-        1、 具有tabindex属性
-        
-        2、  获取焦点； */
-        main.onkeypress = function (e) {
-            let key = e.key;
-            let site = 'http://' + hash[key];
-            window.open(site)
-            // location.href = + site;
-            console.log(hash[key])
-
+        function createImage(domain) {
+            var img = tag('img')
+            if (domain) {
+                img.src = 'http://' + domain + '/favicon.ico'
+            } else {
+                img.src = 'https://i.loli.net/2017/11/10/5a05afbc5e183.png'
+            }
+            img.onerror = function (xxx) {
+                xxx.target.src = 'https://i.loli.net/2017/11/10/5a05afbc5e183.png'
+            }
+            return img
         }
+        function init() {
+            var keys = {
+                '0': { 0: 'q', 1: 'w', 2: 'e', 3: 'r', 4: 't', 5: 'y', 6: 'u', 7: 'i', 8: 'o', 9: 'p', length: 10 },
+                '1': { 0: 'a', 1: 's', 2: 'd', 3: 'f', 4: 'g', 5: 'h', 6: 'j', 7: 'k', 8: 'l', length: 9 },
+                '2': { 0: 'z', 1: 'x', 2: 'c', 3: 'v', 4: 'b', 5: 'n', 6: 'm', length: 7 },
+                'length': 3
+            }
+            var hash = {
+                'q': 'qq.com', 'w': 'weibo.com', 'e': 'ele.me', 'r': 'renren.com', 't': 'tianya.com', 'y': 'youtube.com', 'u': 'uc.com', 'i': 'iqiyi.com', 'o': 'opera.com', 'p': undefined, 'a': 'acfun.tv', 's': 'sohu.com', 'z': 'zhihu.com', 'm': 'www.mcdonalds.com.cn'
+            }
+            // 取出 localStorage 中的 zzz 对应的 hash
+            var hashInLocalStorage = getFromLocalStorage('zzz')
+            if (hashInLocalStorage) {
+                hash = hashInLocalStorage
+            }
+            return {
+                "keys": keys,
+                "hash": hash
+            }
+        }
+        function generateKeyboard(keys, hash) {
+            for (var index = 0; index < keys['length']; index = index + 1) {
+                var div = tag('div')
+                div.className = 'row'
+
+                main.appendChild(div)
+
+                var row = keys[index]  // 第一个数组  第二个数组  第三个数组
+                for (var index2 = 0; index2 < row['length']; index2 = index2 + 1) {
+                    var span = createSpan(row[index2])
+
+                    var button = createButton(row[index2])
+
+                    var img = createImage(hash[row[index2]])
+
+                    var kbd = tag('kbd')
+                    kbd.className = 'key'
+
+                    kbd.appendChild(span)
+                    kbd.appendChild(img)
+                    kbd.appendChild(button)
+
+                    div.appendChild(kbd)
+                }
+            }
+        }
+        function listenToUser(hash) {
+            document.onkeypress = function (xzkjcnxlkcjlk) {
+                var key = xzkjcnxlkcjlk['key'] // q w e
+                var website = hash[key]
+                //location.href = 'http://'+website
+                window.open('http://' + website, '_blank')
+            }
+        }
+
     </script>
 </body>
 
