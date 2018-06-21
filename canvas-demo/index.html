@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas-demo</title>
+    <style>
+        body {
+            margin: 0;
+            position: relative;
+        }
+
+        #canvas {
+            height: 30vh;
+            background-color: royalblue;
+            position: relative;
+        }
+
+        .s-point {
+            width: 6px;
+            height: 6px;
+            border-radius: 3px;
+            background-color: #fff;
+            position: absolute;
+        }
+
+        #xxx {
+            background-color: rosybrown;
+            display: block;
+        }
+
+        #eraser {
+            position: absolute;
+            top: 0;
+        }
+
+        #color {
+            position: absolute;
+            top: 0;
+            left: 200px;
+        }
+
+        #configColor {
+            position: absolute;
+            top: 0;
+            left: 400px;
+        }
+
+        #color>span {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 10px;
+        }
+
+        #color>.active {
+            border: 1px solid #000;
+        }
+
+        #color>.red {
+            background-color: red;
+        }
+
+        #color>.yellow {
+            background-color: yellowgreen;
+        }
+
+        #color>.blue {
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div id="canvas"></div> -->
+    <canvas id="xxx" width="500px" height="500px"></canvas>
+    <button id="eraser">画笔</button>
+
+    <div id="color">
+        <span class="red"></span>
+        <span class="yellow"></span>
+        <span class="blue"></span>
+
+    </div>
+    <input type="color" id="configColor">
+    <script>
+
+
+
+        let canvas = document.getElementById('xxx');
+        let ctx = canvas.getContext('2d');
+        let eraser = document.getElementById('eraser');
+        setCanvasSize();
+        mouseMonitor(canvas);
+
+
+        let brushColor = 'black';
+
+        let colorBox = document.getElementById('color');
+        let configColor = document.getElementById('configColor');
+        configColor.onchange = function () {
+            document.getElementById('configColor').click();
+            brushColor = this.value;
+        }
+        colorBox.addEventListener("click", function (e) {
+            brushColor = e.target.className;
+        })
+
+
+        function setCanvasSize() {
+            resize();
+            window.onresize = function () {
+                resize()
+            }
+        }
+
+        function mouseMonitor(canvas) {
+            let isStart = false;
+
+            let lastPoint = { x: undefined, y: undefined };
+            canvas.onmousedown = function (e) {
+                let x = e.clientX;
+                let y = e.clientY;
+                isStart = true;
+
+                if (eraserEnable) {
+                    ctx.clearRect(x, y, 10, 10);
+                } else {
+                    lastPoint = { x: x, y: y };
+                }
+            }
+
+            canvas.onmousemove = function (e) {
+                let x = e.clientX;
+                let y = e.clientY;
+                if (!isStart) {
+                    return;
+                }
+                if (eraserEnable) {
+                    ctx.clearRect(x, y, 10, 10);
+                } else {
+                    let newPoint = { x: x, y: y };
+                    // drawCircle(x, y, 1);
+                    drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y);
+                    lastPoint = newPoint;
+                }
+
+            }
+            canvas.onmouseup = function (e) {
+                isStart = false;
+            }
+        }
+
+
+        let eraserEnable = false;
+
+        eraser.onclick = function () {
+            eraser.textContent = eraserEnable ? '画笔' : '橡皮擦';
+            eraserEnable = !eraserEnable;
+
+        }
+
+        function drawCircle(x, y, r) {
+            ctx.beginPath();
+            ctx.fillStyle = brushColor;
+            ctx.arc(x, y, r, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        function drawLine(x1, y1, x2, y2) {
+            ctx.beginPath();
+            ctx.strokeStyle = brushColor;
+            ctx.lineWidth = 3;
+
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            ctx.closePath();
+
+        }
+        function resize() {
+            let pageWidth = document.documentElement.clientWidth;
+            let pageHeight = document.documentElement.clientHeight;
+
+            canvas.width = pageWidth;
+            canvas.height = pageHeight;
+        }
+    </script>
+    <script>
+        // let canvas = document.getElementById('xxx');
+        // let ctx = canvas.getContext('2d');
+        // ctx.fillStyle = 'red';
+        // ctx.fillRect(0, 0, 100, 100)
+
+        // //圆形
+        // ctx.beginPath();
+        // ctx.arc(150, 150,
+        //     20,//半径
+        //     0,//从0°开始
+        //     Math.PI * 2//画到360°
+        // );
+        // ctx.fill();
+        // ctx.stroke();
+
+
+
+        // ctx.beginPath();
+        // ctx.moveTo(200, 200);
+        // ctx.lineTo(200, 300);
+        // ctx.lineTo(300, 300);
+        // ctx.fill();
+
+        //html 画板
+        // let isStart = false;
+        // document.onmousedown = function (e) {
+        //     isStart = true;
+        //     let x = e.clientX;
+        //     let y = e.clientY;
+        //     let sPoint = document.createElement('div');
+        //     sPoint.className = 's-point';
+        //     sPoint.style.left = x - 3 + 'px';
+        //     sPoint.style.top = y - 3 + 'px';
+        //     let canvas = document.getElementById('canvas');
+        //     canvas.appendChild(sPoint);
+
+        // }
+
+        // document.onmousemove = function (e) {
+        //     if (isStart) {
+        //         let x = e.clientX;
+        //         let y = e.clientY;
+        //         let sPoint = document.createElement('div');
+        //         sPoint.className = 's-point';
+        //         sPoint.style.left = x - 3 + 'px';
+        //         sPoint.style.top = y - 3 + 'px';
+        //         let canvas = document.getElementById('canvas');
+        //         canvas.appendChild(sPoint);
+        //     }
+        // }
+
+        // document.onmouseup = function (e) {
+        //     isStart = false;
+        // }
+    </script>
+</body>
+
+</html>
