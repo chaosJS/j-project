@@ -5,86 +5,13 @@
   <title>我的个人简历</title>
   <link rel="stylesheet" href="./style.css">
   <script src="https://at.alicdn.com/t/font_515481_smn188ipmq9kvs4i.js"></script>
-  <style type="text/css">
-    .icon {
-      width: 1em;
-      height: 1em;
-      vertical-align: -0.15em;
-      fill: currentColor;
-      overflow: hidden;
-    }
-
-    .loading {
-      width: 200px;
-      height: 200px;
-      position: relative;
-    }
-
-    .loading::before,
-    .loading::after {
-      content: '';
-      position: absolute;
-      width: 0px;
-      height: 0px;
-      background: black;
-      border-radius: 50%;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      margin: auto;
-      animation: s 1.5s linear infinite;
-    }
-
-    .loading::after {
-      animation-delay: 0.75s;
-    }
-
-    @keyframes s {
-      0% {
-        width: 0px;
-        height: 0px;
-        opacity: 1;
-      }
-      100% {
-        width: 100px;
-        height: 100px;
-        opacity: 0;
-      }
-    }
-
-    .icon {
-      width: 1em;
-      height: 1em;
-      vertical-align: -0.15em;
-      fill: currentColor;
-      overflow: hidden;
-    }
-
-    .site-welcome {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #888;
-      z-index: 1;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .site-welcome.active {
-      display: flex;
-    }
-  </style>
 </head>
 
 <body>
   <div id="siteWelcome" class="site-welcome active">
     <div class="loading"></div>
   </div>
-  <div class="topNavBar">
+  <div id="topNavBar" class="topNavBar">
     <div class="topNavBar-inner clearfix">
       <a class="logo" href="#" alt="logo" style="float: left;">
         <span class="rs">RS</span>
@@ -100,6 +27,11 @@
           </li>
           <li>
             <a href="#">作品</a>
+            <ul>
+              <li>作品 1</li>
+              <li>作品 2</li>
+              <li>作品 3</li>
+            </ul>
           </li>
           <li>
             <a href="#">博客</a>
@@ -273,6 +205,11 @@
     setTimeout(function () {
       siteWelcome.classList.remove('active')
     }, 1000)
+
+    window.onscroll = function (e) {
+      // console.log(window.scrollY);
+      window.scrollY > 0 ? topNavBar.classList.add('sticky') : topNavBar.classList.remove('sticky')
+    }
   </script>
 </body>
 

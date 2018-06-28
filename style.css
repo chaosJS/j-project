@@ -10,6 +10,81 @@ a {
   margin: 0;
   padding: 0;
 }
+ul,li{
+  list-style: none;
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+.loading {
+  width: 200px;
+  height: 200px;
+  position: relative;
+}
+
+.loading::before,
+.loading::after {
+  content: '';
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  background: black;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  animation: s 1.5s linear infinite;
+}
+
+.loading::after {
+  animation-delay: 0.75s;
+}
+
+@keyframes s {
+  0% {
+    width: 0px;
+    height: 0px;
+    opacity: 1;
+  }
+  100% {
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+  }
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+.site-welcome {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #888;
+  z-index: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.site-welcome.active {
+  display: flex;
+}
 hr{
   height: 0;
   border: none;
@@ -20,12 +95,21 @@ hr{
   display: block;
   clear: both;
 }
+.topNavBar.sticky {
+  background-color: #fff;
+  padding: 10px 0;
+  box-shadow: 0 0 20px rgba(0,0,0,0.45);
+  color: #3d4451;
+
+}
 .topNavBar {
   padding: 20px 0 20px 0;
   position: fixed;
+  color: #b7b7b7;
   top: 0;
   left: 0;
   width: 100%;
+  transition: all ,.5s;
 }
 .topNavBar-inner {
   padding: 0 16px;
@@ -45,16 +129,32 @@ hr{
 }
 .topNavBar nav > ul > li > a {
   font-size: 12px;
-  color: #b7b7b7;
   font-weight: bold;
   border-top: 3px solid transparent;
   border-bottom: 3px solid transparent;
   padding-top: 5px;
   padding-bottom: 5px;
   display: block;
+  position: relative;
 }
-.topNavBar nav > ul > li > a:hover {
-  border-bottom: 3px solid #e06567;
+.topNavBar nav > ul > li > a:hover::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color:  #e06567;
+  animation: borderBottomSlide .5s;
+}
+@keyframes borderBottomSlide{
+  0%{
+    width:0;
+  }
+  100%{
+    width:100%;
+  }
 }
 
 .topNavBar .logo {
