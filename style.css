@@ -100,6 +100,7 @@ hr{
   padding: 10px 0;
   box-shadow: 0 0 20px rgba(0,0,0,0.45);
   color: #3d4451;
+  z-index: 1;
 
 }
 .topNavBar {
@@ -107,10 +108,40 @@ hr{
   position: fixed;
   color: #b7b7b7;
   top: 0;
-  left: 0;
+  right:  0;
   width: 100%;
   transition: all ,.5s;
 }
+.topNavBar .subMenu{
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: #fff;
+  color: #3d4451;
+  box-shadow: 0px 4px 13px 0px rgba(0, 0, 0, 0.2);
+}
+.topNavBar li.active> .subMenu{
+  display: block;
+  animation: subMenuSlide .2s;
+}
+@keyframes subMenuSlide{
+  0%{
+    margin-right: 100%;
+  }
+  100%{
+    margin-right: 0%;
+  }
+}
+.topNavBar .subMenu >li{
+  white-space: nowrap;
+  padding:10px 15px ;
+  cursor: pointer;
+}
+.topNavBar .subMenu >li:hover{
+  color: #e06567;
+}
+
 .topNavBar-inner {
   padding: 0 16px;
 }
@@ -126,6 +157,7 @@ hr{
   float: left;
   margin-left: 17px;
   margin-right: 17px;
+  position: relative;
 }
 .topNavBar nav > ul > li > a {
   font-size: 12px;
@@ -137,7 +169,7 @@ hr{
   display: block;
   position: relative;
 }
-.topNavBar nav > ul > li > a:hover::after {
+.topNavBar nav > ul > li.active > a::after {
   content: '';
   display: block;
   position: absolute;

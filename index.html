@@ -17,27 +17,32 @@
         <span class="rs">RS</span>
         <span class="card">card</span>
       </a>
-      <nav style="float: right;">
+      <nav class="menu" style="float: right;">
         <ul class="clearfix">
           <li>
-            <a href="./canvas-demo/index.html">关于</a>
+            <a href="#siteAbout">关于</a>
           </li>
           <li>
-            <a href="#">技能</a>
+            <a href="#siteSkill">技能</a>
           </li>
           <li>
-            <a href="#">作品</a>
-            <ul>
+            <a href="#siteWorks">作品</a>
+            <ul class="subMenu">
               <li>作品 1</li>
               <li>作品 2</li>
               <li>作品 3</li>
             </ul>
           </li>
           <li>
-            <a href="#">博客</a>
+            <a href="">博客</a>
+            <ul class="subMenu">
+              <li>作品 1</li>
+              <li>作品 2</li>
+              <li>作品 3</li>
+            </ul>
           </li>
           <li>
-            <a href="#">日历</a>
+            <a href="">日历</a>
           </li>
           <li>
             <a href="#">联系方式</a>
@@ -53,7 +58,7 @@
     <div class="mask"></div>
   </div>
   <main>
-    <div class="userCard">
+    <div class="userCard" id="siteAbout">
       <div class="pictureAndText clearfix">
         <div class="picture">
           <img src="./img/avatar.jpg" width="299" height="347" alt="头像">
@@ -110,7 +115,7 @@
     </p>
 
   </main>
-  <section class="skills">
+  <section class="skills" id="siteSkill">
     <h2>技能</h2>
     <ol class="clearfix">
       <li>
@@ -163,7 +168,7 @@
       </li>
     </ol>
   </section>
-  <section class="portfolio">
+  <section class="portfolio" id="siteWorks">
     <h2>作品集</h2>
     <nav>
       <ol class="clearfix">
@@ -210,6 +215,31 @@
       // console.log(window.scrollY);
       window.scrollY > 0 ? topNavBar.classList.add('sticky') : topNavBar.classList.remove('sticky')
     }
+
+
+    let liTags = document.querySelectorAll('nav.menu>ul>li');
+    for (let i = 0; i < liTags.length; i++) {
+      liTags[i].onmouseenter = function (e) {
+        e.currentTarget.classList.add('active');
+
+      }
+
+      liTags[i].onmouseleave = function (e) {
+        e.currentTarget.classList.remove('active');
+
+      }
+    }
+
+    let aTags = document.querySelectorAll('nav.menu>ul>li>a');
+    for (let i = 0; i < aTags.length; i++) {
+      aTags[i].onclick = function (e) {
+        e.preventDefault();
+        let href = e.currentTarget.getAttribute('href');
+        let ele = document.querySelector(href);
+        window.scrollTo(0, ele.offsetTop - 60)
+      }
+    }
+
   </script>
 </body>
 
