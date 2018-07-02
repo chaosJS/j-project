@@ -47,6 +47,13 @@ ul,li{
 .loading::after {
   animation-delay: 0.75s;
 }
+[data-x].offset{
+transform: translateY(200px);
+}
+[data-x]{
+  transform: translateY(0px);
+  transition: all .2s;
+  }
 
 @keyframes s {
   0% {
@@ -169,7 +176,10 @@ hr{
   display: block;
   position: relative;
 }
-.topNavBar nav > ul > li.active > a::after {
+.topNavBar nav > ul > li.active > a::after,
+.topNavBar nav > ul > li.highlight > a::after
+
+{
   content: '';
   display: block;
   position: absolute;
@@ -364,12 +374,19 @@ section.skills .progressBar {
   background: #FAE1E1;
   border-radius: 2px;
   margin: 4px 0 40px;
+  overflow: hidden;
 }
+
 section.skills .progressBar > .progress {
   height: 100%;
   background: #E6686A;
   width: 70%;
   border-radius: 2px;
+  transform: translateX(0);
+  transition: all 1.5s;
+}
+section.skills.offset .progress{
+  transform: translateX(-100%)
 }
 
 section.portfolio {

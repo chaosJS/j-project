@@ -58,7 +58,7 @@
     <div class="mask"></div>
   </div>
   <main>
-    <div class="userCard" id="siteAbout">
+    <div class="userCard" id="siteAbout" data-x>
       <div class="pictureAndText clearfix">
         <div class="picture">
           <img src="./img/avatar.jpg" width="299" height="347" alt="头像">
@@ -115,7 +115,7 @@
     </p>
 
   </main>
-  <section class="skills" id="siteSkill">
+  <section class="skills" id="siteSkill" data-x>
     <h2>技能</h2>
     <ol class="clearfix">
       <li>
@@ -168,7 +168,7 @@
       </li>
     </ol>
   </section>
-  <section class="portfolio" id="siteWorks">
+  <section class="portfolio" id="siteWorks" data-x>
     <h2>作品集</h2>
     <nav>
       <ol class="clearfix">
@@ -206,17 +206,50 @@
     </div>
 
   </section>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/17.2.0/Tween.min.js"></script>
   <script>
     setTimeout(function () {
       siteWelcome.classList.remove('active')
-    }, 1000)
+    }, 500)
 
+    let specialTags = document.querySelectorAll('[data-x]')
+    for (let i = 0; i < specialTags.length; i++) {
+      specialTags[i].classList.add('offset')
+    }
+
+    findCloseEle()
     window.onscroll = function (e) {
       // console.log(window.scrollY);
       window.scrollY > 0 ? topNavBar.classList.add('sticky') : topNavBar.classList.remove('sticky')
+
+      findCloseEle();
     }
 
 
+    function findCloseEle() {
+      let specialTags = document.querySelectorAll('[data-x]')
+      let minIndex = 0;
+
+      for (let i = 1; i < specialTags.length; i++) {
+        if (
+          Math.abs(specialTags[i].offsetTop - window.scrollY)
+          <
+          Math.abs(specialTags[minIndex].offsetTop - window.scrollY)
+        ) {
+          minIndex = i
+        }
+      }
+
+      specialTags[minIndex].classList.remove('offset')
+      let id = specialTags[minIndex].id;
+      let a = document.querySelector(`a[href="#${id}"]`);
+      let li = a.parentElement;
+      let aSlibings = li.parentElement.children;
+      for (let i = 0; i < aSlibings.length; i++) {
+        aSlibings[i].classList.remove('highlight')
+      }
+      li.classList.add('highlight');
+    }
     let liTags = document.querySelectorAll('nav.menu>ul>li');
     for (let i = 0; i < liTags.length; i++) {
       liTags[i].onmouseenter = function (e) {
@@ -230,13 +263,40 @@
       }
     }
 
+
+    // Setup the animation loop.
+    function animate(time) {
+      requestAnimationFrame(animate);
+      TWEEN.update(time);
+    }
+    requestAnimationFrame(animate);
+
     let aTags = document.querySelectorAll('nav.menu>ul>li>a');
     for (let i = 0; i < aTags.length; i++) {
       aTags[i].onclick = function (e) {
         e.preventDefault();
         let href = e.currentTarget.getAttribute('href');
         let ele = document.querySelector(href);
-        window.scrollTo(0, ele.offsetTop - 60)
+
+        let top = ele.offsetTop;//目标元素距离顶部距离
+
+        let currentTop = window.scrollY; //
+        let targetTop = top - 70;
+        let distance = (targetTop - currentTop)
+
+        var coords = { y: currentTop };
+        let t = Math.abs(distance / 100 * 300);
+        t > 500 ? 500 : t;
+
+        var tween = new TWEEN.Tween(coords)
+          .to({ y: targetTop }, 1000)
+          .easing(TWEEN.Easing.Bounce.Out)
+          .onUpdate(function () { // Called after tween.js updates 'coords'.
+            window.scrollTo(0, coords.y)
+
+          })
+          .start(); // Start the tween immediately.
+
       }
     }
 
