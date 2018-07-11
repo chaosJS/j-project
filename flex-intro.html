@@ -194,7 +194,39 @@
     <!-- todo flex 布局 -->
 
     <script>
+        window.jQuery = (selector) => {
+            let nodes = {};
+            if (typeof selector === 'string') {
+                //是字符串
+                let temp = document.querySelectorAll(selector);
+                for (let i = 0; i < temp.length; i++) {
+                    nodes[i] = temp[i]
+                }
+                nodes.length = temp.length;
+            } else if (selector instanceof Node) {
+                //直接是个Node节点
+                nodes = {
+                    0: selector,
+                    length: 1
+                }
+            }
+            nodes.addClass = (classList) => {
+                classList.forEach(klass => {
+                    for (let i = 0; i < nodes.length; i++) {
+                        nodes[i].classList.add(klass)
+                    }
+                });
+            }
+            nodes.setText = (text) => {
+                for (let i = 0; i < nodes.length; i++) {
+                    nodes[i].textContent = text
+                }
+            }
 
+            return nodes;
+        }
+
+        window.$ = jQuery
     </script>
 </body>
 
