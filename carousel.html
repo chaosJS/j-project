@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>carousel-demo</title>
+    <style>
+        .images {
+            /* display: flex; */
+            /* align-items: flex-start; */
+            transition: all 0.5s;
+        }
+
+        .images>img {
+            vertical-align: top;
+            border-radius: 10px;
+        }
+
+        .window {
+            width: 600px;
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+
+
+
+        #buttons {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            background-color: black;
+            opacity: .5;
+            transform: translate(0, -50%);
+            width: 20px;
+            text-align: center;
+        }
+
+        #buttons>span {
+            display: block;
+        }
+
+        .red {
+            color: #fff;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="window">
+        <div class="images" id=images>
+            <img src="http://s3img.city.sina.com.cn/travel/trip/trip_tuijian/1453779262.jpg" width=600 alt="图片1" height=400>
+            <img src="http://img8.ppsj.com.cn/385/3857/w214614608.jpg" width=600 alt="" height=400>
+            <img src="http://www.xwlxw.com/uploads/allimg/140125/1-140125095321347.jpg" width=600 alt="" height=400>
+            <img src="http://images.aituyizu.cn/allimg/1801/000179.jpg" width=600 alt="" height=400>
+        </div>
+        <span id=buttons>
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+        </span>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        var allButtons = $('#buttons > span')
+
+        for (let i = 0; i < allButtons.length; i++) {
+            $(allButtons[i]).on('click', function (x) {
+                var index = $(x.currentTarget).index()
+                var p = index * -400
+                $('#images').css({
+                    transform: 'translateY(' + p + 'px)'
+                })
+                n = index
+                activeButton(allButtons.eq(n))
+            })
+        }
+
+
+
+        var n = 0;
+        var size = allButtons.length
+        var timerId = setTimer()
+        allButtons.eq(n % size).trigger('click')
+
+        function setTimer() {
+            return setInterval(() => {
+                n += 1
+                allButtons.eq(n % size).trigger('click')
+            }, 2000)
+        }
+
+        function activeButton($button) {
+            $button
+                .addClass('red')
+                .siblings('.red').removeClass('red')
+        }
+
+        $('.window').on('mouseenter', function () {
+            window.clearInterval(timerId)
+        })
+
+        $('.window').on('mouseleave', function () {
+            timerId = setTimer()
+        })
+    </script>
+</body>
+
+</html>
