@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>carousel-slide</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+
+<body>
+    <div class="window">
+        <div class="images">
+            <img src="./images/1.jpg">
+            <img src="./images/2.jpg">
+            <img src="./images/3.jpg">
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./main.js"></script>
+    <script>
+        let n, imgNum = $(`.images > img`).length;
+
+        init();
+        setInterval(() => {
+            handleLeave(
+                getImg(n)
+            )
+                .one('transitionend', (e) => {
+                    handleEnter($(e.currentTarget))
+                })
+            handleCurrent(getImg(n + 1))
+            n += 1;
+        }, 2000)
+
+
+
+
+
+        function x(n) {
+            if (n % imgNum === 0) {
+                return imgNum;
+            }
+            return n > imgNum ? n % imgNum : n
+        }
+        function init() {
+            n = 1;
+            getImg(n).addClass('current')
+                .siblings().addClass('enter');
+        }
+
+        function getImg(n) {
+            return $(`.images > img:nth-child(${x(n)})`)
+
+        }
+        handleCurrent = ($node) => {
+            $node.removeClass('enter').addClass('current');
+            return $node
+        }
+
+        handleLeave = ($node) => {
+            $node.removeClass('current')
+                .addClass('leave')
+            return $node
+
+        }
+
+        handleEnter = ($node) => {
+            $node.removeClass('leave')
+                .addClass('enter')
+            return $node
+
+        }
+
+    </script>
+</body>
+
+</html>
