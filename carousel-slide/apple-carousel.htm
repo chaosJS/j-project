@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            vertical-align: top;
+        }
+
+        .wrap {
+            position: relative;
+            width: 800px;
+            height: 400px;
+            border: 2px solid plum;
+            margin: 100px auto;
+        }
+
+        .wrap li {
+            width: 100%;
+            height: 100%;
+        }
+
+        .wrap li img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .left,
+        .right {
+            width: 30px;
+            height: 80px;
+            line-height: 80px;
+            background: rgba(235, 235, 235, 0.3);
+            top: 160px;
+            text-align: center;
+            cursor: pointer;
+            position: absolute;
+
+        }
+
+        .left {
+            float: left;
+        }
+
+        .right {
+            left: 770px;
+            float: right;
+        }
+
+        .ico {
+            position: absolute;
+            right: 10px;
+            bottom: 20px;
+        }
+
+        .ico p {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 1px solid orange;
+            float: left;
+            text-align: center;
+            line-height: 20px;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="wrap">
+        <li>
+            <img src="./images/1.jpg" alt="" />
+        </li>
+        <li class="hide">
+            <img src="./images/2.jpg" alt="" />
+        </li>
+        <li class="hide">
+            <img src="./images/3.jpg" alt="" />
+        </li>
+        <!-- <li class="hide">
+            <img src="./images/bg4.png" alt="" />
+        </li>
+        <li class="hide">
+            <img src="./images/bg5.png" alt="" />
+        </li> -->
+        <div class="left">&lt;</div>
+        <div class="right">&gt;</div>
+        <div class="ico">
+            <p>1</p>
+
+            <p>2</p>
+
+            <p>3</p>
+
+            <p>4</p>
+
+            <p>5</p>
+        </div>
+    </ul>
+    <script type="text/javascript">
+        var lis = document.getElementsByTagName('li');
+        var ps = document.getElementsByClassName('ico')[0].getElementsByTagName('p');
+        var num = 0;
+        var timer;
+        change(lis, num);//传参，初始化 当前第num个li显示 ，其余隐藏
+        function change(obj, inx) {
+            clearInterval(timer);
+            for (var i = 0; i < lis.length; i++) {
+                lis[i].style.display = 'none';
+            }
+            lis[inx].style.display = 'block';
+            document.getElementsByClassName('right')[0].onclick = function () {
+                num++;
+                //如果当图片的角标值等于Li的长度。从头开始
+                if (num == lis.length) {
+                    num = 0;
+                }
+                change(lis, num);
+            }
+            //当鼠标经过的时候
+            for (var j = 0; j < ps.length; j++) {
+                ps[j].index = j;
+                ps[j].onmouseover = function () {
+
+                    //num的值等于当前事件对象ico的内容数值减1
+                    num = this.innerHTML - 1;
+                    this.style.background = 'orange';
+                    this.style.cursor = 'pointer';
+                    change(lis, num);
+                }
+                //和ico元素对应角标的图片显示出来；
+                //挡鼠板离开的时候  颜色 恢复为白色
+                ps[j].onmouseout = function () {
+                    this.style.background = 'white';
+                }
+            }
+            //设置一个定时器，让图片自动轮播
+            timer = setInterval(function () {
+                change(lis, num);
+                num++;
+                //当Num大于等于图片的length的时候又从第一张开始
+                if (num == lis.length) {
+                    num = 0;
+                }
+            }, 2000)
+        }
+
+    </script>
+</body>
+
+</html>

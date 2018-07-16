@@ -1,5 +1,7 @@
 *{margin: 0;padding: 0;box-sizing: border-box;}
 .window{width: 600px;height: 400px;margin: 20px auto;overflow: hidden;}
+/* ver 1.0  */
+/* 
 .images{
     position: relative;
 }
@@ -22,4 +24,17 @@
 
 .images>img.enter{
     transform: translateX(100%);
+} */
+/* ver 1.0 end */
+
+/* ver 2.0  */
+.images{
+    display: flex;   
+    transition: all,.5s;
+    
 }
+.images>img{
+    width: 100%;
+    
+}
+/* ver 2.0 end */

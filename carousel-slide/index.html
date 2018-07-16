@@ -12,19 +12,29 @@
 
 <body>
     <div class="window">
-        <div class="images">
+        <div id="slides" class="images">
             <img src="./images/1.jpg">
             <img src="./images/2.jpg">
             <img src="./images/3.jpg">
         </div>
     </div>
+
+    <!-- ver 2.0  -->
+    <div id="buttonWrapper" style="text-align: center;">
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+    </div>
+    <!-- ver 2.0 end -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="./main.js"></script>
-    <script>
+    <!-- ver 1.0 -->
+    <!-- <script>
         let n, imgNum = $(`.images > img`).length;
 
         init();
-        setInterval(() => {
+        let timer = setInterval(() => {
             handleLeave(
                 getImg(n)
             )
@@ -34,6 +44,23 @@
             handleCurrent(getImg(n + 1))
             n += 1;
         }, 2000)
+        // fix 用户不看页面的时候 setInterval 执行有问题
+        $(document).on('visibilitychange', (e) => {
+            if (document.hidden) {
+                clearInterval(timer)
+            } else {
+                timer = setInterval(() => {
+                    handleLeave(
+                        getImg(n)
+                    )
+                        .one('transitionend', (e) => {
+                            handleEnter($(e.currentTarget))
+                        })
+                    handleCurrent(getImg(n + 1))
+                    n += 1;
+                }, 2000)
+            }
+        })
 
 
 
@@ -74,7 +101,8 @@
 
         }
 
-    </script>
+    </script> -->
+    <!-- ver 1.0 end -->
 </body>
 
 </html>
