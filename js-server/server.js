@@ -16,9 +16,9 @@ var server = http.createServer(function (request, response) {
 	var pathNoQuery = parsedUrl.pathname
 	var queryObject = parsedUrl.query
 	var method = request.method
-	console.log('HTTP 路径\n' + path)
-	console.log('查询字符串为\n' + query)
-	console.log('不含查询字符串的路径为\n' + pathNoQuery);
+	console.log('HTTP 路径  path::' + path)
+	console.log('查询字符串为::' + query)
+	console.log('不含查询字符串的路径为::' + pathNoQuery);
 
 
 	if (path === '/') {
@@ -43,7 +43,7 @@ var server = http.createServer(function (request, response) {
 			str
 		);
 		response.end();
-	} else if (path === '/pay') {
+	} else if (pathNoQuery === '/pay') {
 		let amount = fs.readFileSync('./db', 'utf-8');
 		var newAmount = amount - 1;
 		if (Math.random() > 0.2) {
@@ -52,7 +52,7 @@ var server = http.createServer(function (request, response) {
 			response.statusCode = 200;
 			response.write(
 				`
-			amount.innerText =${newAmount}
+			${queryObject.callback}.call(undefined,${newAmount})
 			`
 			);
 		} else {
