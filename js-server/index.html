@@ -1,0 +1,37 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <title>node page</title>
+    <link rel="stylesheet" href="/style" />
+</head>
+
+<body>
+    <h1>你好 node.js</h1>
+    <h4>您的账户余额是
+        <span id="amount">
+            ___amount___
+        </span>
+    </h4>
+    <button id="button">打钱</button>
+
+
+    <script src="/main"></script>
+    <script>
+        button.addEventListener('click', () => {
+            let script = document.createElement('script');
+            script.src = '/pay';
+            document.body.appendChild(script);
+            script.onload = function (e) {
+                e.currentTarget.remove();
+            }
+            script.onerror = function (e) {
+                e.currentTarget.remove();
+                alert('fail')
+            }
+
+        })
+    </script>
+</body>
+
+</html>
