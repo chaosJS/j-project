@@ -15,10 +15,51 @@
     </h4>
     <button id="button">打钱</button>
 
+    <hr>
+    <h2>XMLHttpRequest</h2>
+    <button id="myButton">发请求</button>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/main"></script>
     <script>
+        /*ajax*/
+        myButton.addEventListener('click', (e) => {
+            let request = new XMLHttpRequest();
+            request.onreadystatechange = function () {
+                //只要readystate change了 就打印出readystate
+                console.log('readstate change:::', request.readyState)
+                if (request.readyState === 4) {
+                    if (request.status >= 200 && request.status < 300) {
+                        //成功
+                        console.log('请求成功')
+                        console.log(JSON.parse(request.responseText));
+
+                    }
+                    if (request.status > 400) {
+                        console.log('失败')
+                        console.log(request.responseText);
+                    }
+                }
+
+            }
+            console.log(request.readyState);//0 open 方法还未调用
+            request.open(
+                'GET',//method
+                './xxx',//url
+            );
+            console.log(request.readyState);//1 send方法还未调用
+            request.send();
+            //2 send
+            console.log(request.readyState);//2 send方法已经被调用 响应头 和 响应状态 已经返回
+            //3. loading 响应体下载中
+
+            // 4. done ，请求已经结束
+            console.log(request.readyState);
+
+
+        })
+
         /*
         1. 共同约定：callback
         2. getAmount函数名随机生成

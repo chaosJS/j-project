@@ -62,7 +62,22 @@ var server = http.createServer(function (request, response) {
 		}
 		response.end();
 
-	} else {
+	} else if (path === '/xxx') {
+		response.statusCode = 200;
+		response.setHeader('Content-Type', 'text/xml');
+		response.write(`
+		{
+			"age":18,
+			"name":"lichao",
+			"skills":[
+				{"12":"234"},
+				{"1qwe2":"23asd4"}
+			]
+		}
+		`);
+		response.end();
+	}
+	else {
 		response.statusCode = 404;
 		response.setHeader('Content-Type', 'text/text;charset=utf-8');
 		response.write(
