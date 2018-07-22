@@ -447,3 +447,6 @@ section.portfolio .works > .big,
 section.portfolio .works > .small {
   position: absolute;
 }
+.swiper-slide>img {
+  width: 70%
+}

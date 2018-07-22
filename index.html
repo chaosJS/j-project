@@ -4,6 +4,8 @@
 <head>
   <title>我的个人简历</title>
   <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.1.0/css/swiper.min.css">
+
   <script src="https://at.alicdn.com/t/font_515481_smn188ipmq9kvs4i.js"></script>
 </head>
 
@@ -171,43 +173,70 @@
   <section class="portfolio" id="siteWorks" data-x>
     <h2>作品集</h2>
     <nav>
-      <ol class="clearfix">
+      <!-- <ol class="clearfix">
         <li id="portfolio1">所有</li>
         <li id="portfolio2">框架</li>
         <li id="portfolio3">原生JS&amp;CSS</li>
-      </ol>
+      </ol> -->
       <div id="portfolioBar" class="bar state-1">
         <div class="bar-inner"></div>
       </div>
     </nav>
-    <script>
-      portfolio1.onclick = function () {
-        portfolioBar.className = 'bar state-1'
+    <style>
+      .swiper-slide>img {
+        width: 70%
       }
-      portfolio2.onclick = function () {
-        portfolioBar.className = 'bar state-2'
-      }
-      portfolio3.onclick = function () {
-        portfolioBar.className = 'bar state-3'
-      }
-    </script>
+    </style>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="./img/works/nav-site.jpg" alt="">
+        </div>
+        <div class="swiper-slide">
+          <img src="./img/works/canvas.jpg" alt="">
 
+        </div>
+        <div class="swiper-slide">
+          <img src="./img/works/apple-style.jpg" alt="">
+        </div>
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination"></div>
 
-    <div class="works" style="height: 597px;">
-      <div class="big" style="top: 0; left: 0;">
-        <img src="./img/1.jpg" alt="作品1">
-      </div>
-      <div class="small" style="top: 0; left: 645px;">
-        <img src="./img/2.jpg" alt="作品2">
-      </div>
-      <div class="small" style="top: 312px; left: 645px;">
-        <img src="./img/3.jpg" alt="作品3">
-      </div>
+      <!-- 如果需要导航按钮 -->
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+
     </div>
 
   </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.1.0/js/swiper.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/17.2.0/Tween.min.js"></script>
   <script>
+
+    var swiper = new Swiper('.swiper-container', {
+      effect: 'flip',
+      grabCursor: true,
+      pagination: {
+        el: '.swiper-pagination',
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+
+
+    // portfolio1.onclick = function () {
+    //   portfolioBar.className = 'bar state-1'
+    // }
+    // portfolio2.onclick = function () {
+    //   portfolioBar.className = 'bar state-2'
+    // }
+    // portfolio3.onclick = function () {
+    //   portfolioBar.className = 'bar state-3'
+    // }
     setTimeout(function () {
       siteWelcome.classList.remove('active')
     }, 500)
