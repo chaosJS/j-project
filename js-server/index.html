@@ -18,7 +18,11 @@
     <hr>
     <h2>XMLHttpRequest</h2>
     <button id="myButton">发请求</button>
+    <hr>
     <button id="myAjaxBtn">myAjax btn</button>
+    <hr>
+    <button id="promiseBtn">Promise</button>
+
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -66,7 +70,6 @@
         /*ajax*/
         myButton.addEventListener('click', (e) => {
             let request = new XMLHttpRequest();
-            request.setRequestHeader('lichao', '18')
             request.onreadystatechange = function () {
                 //只要readystate change了 就打印出readystate
                 console.log('readstate change:::', request.readyState)
@@ -92,6 +95,7 @@
                 'GET',//method
                 './xxx',//url
             );
+            request.setRequestHeader('lichao', '18')
             console.log(request.readyState);//1 send方法还未调用
             request.send();
             // request.send(
@@ -108,7 +112,7 @@
 
         })
 
-        /*
+        /* 跨域：
         1. 共同约定：callback
         2. getAmount函数名随机生成
         window.getAmount(result) {

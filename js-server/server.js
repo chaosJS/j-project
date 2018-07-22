@@ -46,7 +46,7 @@ var server = http.createServer(function (request, response) {
 	} else if (pathNoQuery === '/pay') {
 		let amount = fs.readFileSync('./db', 'utf-8');
 		var newAmount = amount - 1;
-		if (Math.random() > 0.2) {
+		if (Math.random() > 0.1) {
 			fs.writeFileSync('./db', newAmount);
 			response.setHeader('Content-Type', 'application/javascript');
 			response.statusCode = 200;
