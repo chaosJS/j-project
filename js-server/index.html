@@ -18,14 +18,55 @@
     <hr>
     <h2>XMLHttpRequest</h2>
     <button id="myButton">发请求</button>
+    <button id="myAjaxBtn">myAjax btn</button>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/main"></script>
     <script>
+        window.jQuery.myAjax = function (options) {
+            let { method, url, headers, successFn, failFn, body } = options;
+            let request = new XMLHttpRequest();
+            request.open(method, url);
+            for (let key in headers) {
+                request.setRequestHeader(key, headers[key])
+            }
+            request.onreadystatechange = function () {
+                if (request.readyState === 4) {
+                    if (request.status >= 200 && request.status < 300) {
+                        successFn(request.responseText);
+                    } else {
+                        failFn.call(undefined, request)
+                    }
+                }
+            }
+
+            request.send(body);
+        }
+        myAjaxBtn.addEventListener('click', (e) => {
+            jQuery.myAjax({
+                url: '/xxx',
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'chao': '18'
+                },
+                successFn: (resp) => {
+                    console.log(resp)
+                },
+                failFn: (e) => {
+                    console.log('err', e)
+                },
+                body: {
+                    '1': '2',
+                    'fd': 'asd'
+                }
+            })
+        })
         /*ajax*/
         myButton.addEventListener('click', (e) => {
             let request = new XMLHttpRequest();
+            request.setRequestHeader('lichao', '18')
             request.onreadystatechange = function () {
                 //只要readystate change了 就打印出readystate
                 console.log('readstate change:::', request.readyState)
@@ -33,6 +74,9 @@
                     if (request.status >= 200 && request.status < 300) {
                         //成功
                         console.log('请求成功')
+                        //读取相应头
+                        request.getResponseHeader('Content-Type');
+                        request.getAllResponseHeaders();
                         console.log(JSON.parse(request.responseText));
 
                     }
@@ -50,6 +94,10 @@
             );
             console.log(request.readyState);//1 send方法还未调用
             request.send();
+            // request.send(
+            //     'body内容，必须是post方法'
+            // );
+
             //2 send
             console.log(request.readyState);//2 send方法已经被调用 响应头 和 响应状态 已经返回
             //3. loading 响应体下载中
