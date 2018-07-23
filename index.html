@@ -204,18 +204,81 @@
 
       </div>
     </div>
+    <ol id="msgList">
 
+    </ol>
+    <form id="postMessage">
+      <input type="text" name="content">
+      <input type="submit" value="提交">
+    </form>
 
   </section>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.1.0/js/swiper.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/17.2.0/Tween.min.js"></script>
+  <!-- 存储服务 -->
+  <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@3.9.0/dist/av-min.js"></script>
   <script src="./js/mock-loading.js"></script>
   <script src="./js/init-swiper.js"></script>
   <script src="./js/setup-offset.js"></script>
   <script src="./js/smoth-scroll.js"></script>
   <script src="./js/module-1.js"></script>
   <script src="./js/module-2.js"></script>
+  <script>
+
+
+    var APP_ID = 'EsjoEbJOVRWCfmt1KEBHE6Oh-gzGzoHsz';
+    var APP_KEY = 'Cr9DM62TKuO6h8UmeoLm06sd';
+
+    AV.init({
+      appId: APP_ID,
+      appKey: APP_KEY
+    });
+    console.log('success!')
+    var query = new AV.Query('Message');
+    query.find().then(
+      (message) => {
+        let array = message.map((item) => item.attributes);
+        array.forEach(element => {
+          let li = document.createElement('li');
+          li.innerText = element.content;
+          let msgList = document.querySelector('#msgList');
+          msgList.appendChild(li);
+        });
+      },
+      () => { }
+    )
+    // //创建TestObject表
+    // var TestObject = AV.Object.extend('TestObject');
+    // //在表中创建一行数据
+    // var testObject1 = new TestObject();
+    // //save 的内容是msg:hello db
+    // testObject1.save({
+    //   words: 'Hello db'
+    // }).then(function (object) {
+    //   //保存成功，打印object
+    //   console.log(object);
+    // })
+
+    let myForm = document.querySelector('#postMessage');
+    myForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      let content = document.querySelector('input[name=content]').value;
+
+      var Message = AV.Object.extend('Message');
+      //在表中创建一行数据
+      var message = new Message();
+      //save 的内容是msg:hello db
+      message.save({
+        content: content
+      }).then(function (object) {
+        //保存成功，打印object
+        alert('评论成功');
+        window.location.reload()
+        console.log(object);
+      })
+    })
+  </script>
 
 </body>
 
