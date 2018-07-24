@@ -204,15 +204,18 @@
 
       </div>
     </div>
-    <ol id="msgList">
+    <div id="msg-container">
+      <ol id="msgList">
 
-    </ol>
-    <form id="postMessage">
-      <input type="text" name="content" placeholder="留言">
-      <input type="text" name="name" placeholder="姓名">
+      </ol>
+      <form id="postMessage">
+        <input type="text" name="content" placeholder="留言">
+        <input type="text" name="name" placeholder="姓名">
 
-      <input type="submit" value="提交">
-    </form>
+        <input type="submit" value="提交">
+      </form>
+    </div>
+
 
   </section>
 
@@ -224,72 +227,9 @@
   <script src="./js/init-swiper.js"></script>
   <script src="./js/setup-offset.js"></script>
   <script src="./js/smoth-scroll.js"></script>
+  <script src="./js/post-message.js"></script>
   <script src="./js/module-1.js"></script>
   <script src="./js/module-2.js"></script>
-  <script>
-
-
-    var APP_ID = 'EsjoEbJOVRWCfmt1KEBHE6Oh-gzGzoHsz';
-    var APP_KEY = 'Cr9DM62TKuO6h8UmeoLm06sd';
-
-    AV.init({
-      appId: APP_ID,
-      appKey: APP_KEY
-    });
-    console.log('success!')
-    var query = new AV.Query('Message');
-    query.find().then(
-      (message) => {
-        let array = message.map((item) => item.attributes);
-        array.forEach(element => {
-          let li = document.createElement('li');
-          li.innerText = element.name + ':  ' + element.content;
-          let msgList = document.querySelector('#msgList');
-          msgList.appendChild(li);
-        });
-      },
-      () => { }
-    )
-    // //创建TestObject表
-    // var TestObject = AV.Object.extend('TestObject');
-    // //在表中创建一行数据
-    // var testObject1 = new TestObject();
-    // //save 的内容是msg:hello db
-    // testObject1.save({
-    //   words: 'Hello db'
-    // }).then(function (object) {
-    //   //保存成功，打印object
-    //   console.log(object);
-    // })
-
-    let myForm = document.querySelector('#postMessage');
-    myForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      let content = document.querySelector('input[name=content]').value;
-      let name = document.querySelector('input[name=name]').value;
-
-      var Message = AV.Object.extend('Message');
-      //在表中创建一行数据
-      var message = new Message();
-      //save 的内容是msg:hello db
-      message.save({
-        content,
-        name
-      }).then(function (object) {
-        //保存成功，打印object
-        // alert('评论成功');
-        // window.location.reload()
-        let li = document.createElement('li');
-        li.innerText = object.attributes.name + ':' + object.attributes.content;
-        let msgList = document.querySelector('#msgList');
-        msgList.appendChild(li);
-        document.querySelector('input[name=content]').value = '';
-        document.querySelector('input[name=name]').value = '';
-        console.log(object);
-      })
-    })
-  </script>
-
 </body>
 
 </html>
