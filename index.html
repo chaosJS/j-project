@@ -208,7 +208,9 @@
 
     </ol>
     <form id="postMessage">
-      <input type="text" name="content">
+      <input type="text" name="content" placeholder="留言">
+      <input type="text" name="name" placeholder="姓名">
+
       <input type="submit" value="提交">
     </form>
 
@@ -241,7 +243,7 @@
         let array = message.map((item) => item.attributes);
         array.forEach(element => {
           let li = document.createElement('li');
-          li.innerText = element.content;
+          li.innerText = element.name + ':  ' + element.content;
           let msgList = document.querySelector('#msgList');
           msgList.appendChild(li);
         });
@@ -264,17 +266,25 @@
     myForm.addEventListener('submit', function (e) {
       e.preventDefault();
       let content = document.querySelector('input[name=content]').value;
+      let name = document.querySelector('input[name=name]').value;
 
       var Message = AV.Object.extend('Message');
       //在表中创建一行数据
       var message = new Message();
       //save 的内容是msg:hello db
       message.save({
-        content: content
+        content,
+        name
       }).then(function (object) {
         //保存成功，打印object
-        alert('评论成功');
-        window.location.reload()
+        // alert('评论成功');
+        // window.location.reload()
+        let li = document.createElement('li');
+        li.innerText = object.attributes.name + ':' + object.attributes.content;
+        let msgList = document.querySelector('#msgList');
+        msgList.appendChild(li);
+        document.querySelector('input[name=content]').value = '';
+        document.querySelector('input[name=name]').value = '';
         console.log(object);
       })
     })
