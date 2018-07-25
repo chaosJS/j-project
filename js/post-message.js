@@ -1,22 +1,6 @@
 !function () {
-
-    var view = document.querySelector('#msg-container');
-    var model = {
-        fetch: function () {
-            var query = new AV.Query('Message');
-            return query.find();//返回一个promise对象
-        },
-        save: function (name, content) {
-            var Message = AV.Object.extend('Message');
-            //在表中创建一行数据
-            var message = new Message();
-            //save 的内容是msg:hello db
-            return message.save({
-                content,
-                name
-            })
-        }
-    };
+    var view = View('#msg-container');
+    var model = Model({ resourceName: 'Message' });
     var controller = {
         view: null,
         model: null,
@@ -28,20 +12,11 @@
             this.messageList = view.querySelector('#msgList');
             this.myForm = view.querySelector('#postMessage');
 
-            this.initAV();
+            this.model.init();
             this.loadMessages();
             this.bindEvents();
         },
-        initAV: function () {
-            var APP_ID = 'EsjoEbJOVRWCfmt1KEBHE6Oh-gzGzoHsz';
-            var APP_KEY = 'Cr9DM62TKuO6h8UmeoLm06sd';
 
-            AV.init({
-                appId: APP_ID,
-                appKey: APP_KEY
-            });
-            console.log('success!')
-        },
         loadMessages: function () {
             this.model.fetch()
                 .then(
@@ -69,7 +44,7 @@
             let name = this.view.querySelector('input[name=name]').value;
 
             if (content) {
-                this.model.save(name, content).then(
+                this.model.save({ name, content }).then(
                     (object) => {
                         // window.location.reload()
                         let li = document.createElement('li');
