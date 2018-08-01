@@ -9,36 +9,29 @@
 </head>
 
 <body>
-    <h2>注册页面</h2>
-    <form id="signUpForm">
+    <h2>登陆</h2>
+    <form id="signInForm">
         <input type="text" name="email" placeholder="输入邮箱">
         <p class="error"></p>
         <input type="password" name="password" placeholder="输入密码">
         <p class="error"></p>
-
-        <input type="password" name="confirmPassword" placeholder="确认密码">
-        <p class="error"></p>
-
-        <input type="submit" value="注册">
+        <input type="submit" value="登陆">
     </form>
 
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script>
-        let $signUpForm = $('#signUpForm');
+        let $signUpForm = $('#signInForm');
         $signUpForm.on('submit', (e) => {
             e.preventDefault();
-            let needs = ['email', 'password', 'confirmPassword'];
+            let needs = ['email', 'password'];
             let hash = {};
             needs.forEach((name) => {
                 let value = $signUpForm.find(`[name=${name}]`).val();
                 hash[name] = value;
             })
             console.log(hash)
-            $.post('sign-up', hash, null, "json").then(
-                (res) => {
-                    console.log('ssssssssssssss')
-                    window.location.href = '/sign-in'
-                },
+            $.post('sign-in', hash, null, "json").then(
+                (res) => { },
                 (req) => {
                     let error = req.responseText;
                     console.log(error);

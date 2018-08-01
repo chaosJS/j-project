@@ -1,6 +1,7 @@
 var http = require('http')
 var fs = require('fs')
 var url = require('url')
+var queryString = require("querystring");
 var port = process.argv[2]
 
 if (!port) {
@@ -76,13 +77,80 @@ var server = http.createServer(function (request, response) {
 		}
 		`);
 		response.end();
-	} else if (path === '/sign-up') {
+	} else if (path === '/sign-up' && method === 'GET') {
 		let str = fs.readFileSync('./sign-up.html', 'utf-8');
 		response.statusCode = 200;
 		response.setHeader('Content-Type', 'text/html;charset=utf-8');
 		response.write(str);
 		response.end();
+	} else if (path === '/sign-up' && method === 'POST') {
+		var obj = null;
+		var currentData = '';
+		request.on('data', function (data) {
+			currentData += data;
+		}).on('end', () => {
+			obj = queryString.parse(currentData);
+			let { email, password, confirmPassword } = obj;
+			if (!email.includes('@')) {
+				response.statusCode = 400;
+				response.setHeader('Content-Type', 'application/json;charset=utf-8');
+				response.write(`
+					{"error":"invalid email" "code":0}
+				`)
+				response.end();
 
+
+			} else if (password !== confirmPassword) {
+				response.statusCode = 400;
+				response.write('password is not same')
+				response.end();
+
+			} else {
+				var db_users = fs.readFileSync('./users', 'utf-8');
+				var users
+				try {
+					users = JSON.parse(db_users);
+				} catch (e) {
+					users = [];
+				}
+				let isUsed = false;
+				users.forEach(userInfo => {
+					userInfo.email === email;
+					isUsed = true;
+				});
+				if (isUsed) {
+					response.statusCode = 400;
+					response.write('email 已经被使用')
+					response.end();
+				} else {
+					users.push({ email, password })
+					fs.writeFileSync('./users', JSON.stringify(users));
+					response.writeHead(200, { "ContentType": "text/html;charset=utf-8" });
+					response.end();
+				}
+
+
+			}
+
+		});
+
+	} else if (path === '/sign-in' && method === 'GET') {
+		let str = fs.readFileSync('./sign-in.html', 'utf-8');
+		response.statusCode = 200;
+		response.setHeader('Content-Type', 'text/html;charset=utf-8');
+		response.write(str);
+		response.end();
+	} else if (path === '/sign-in' && method === 'POST') {
+		var obj = null;
+		var currentData = '';
+		request.on('data', function (data) {
+			currentData += data;
+		}).on('end', () => {
+			obj = queryString.parse(currentData);
+			let { email, password } = obj;
+
+
+		});
 	}
 	else {
 		response.statusCode = 404;
