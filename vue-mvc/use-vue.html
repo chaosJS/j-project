@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue-mvc</title>
+    <style>
+        .slides {
+            width: 300px;
+            background: rebeccapurple;
+            height: 100px;
+            transition: all, 1s;
+        }
+
+        .window {
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+
+    </div>
+    <script src="https://cdn.bootcss.com/axios/0.18.0/axios.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+    <script>   
+
+        function Model(options) {
+            this.data = options.data;
+            this.resource = options.resource;
+        }
+        Model.prototype.fetch = function (id) {
+            return axios.get(`/${this.resource}/${id}`)
+                .then(
+                    (response) => {
+                        this.data = response.data;
+                        return response;
+                    }
+                )
+        }
+        Model.prototype.update = function (id, newData) {
+            return axios.put(`/${this.resource}/${id}`, newData)
+                .then(
+                    (response) => {
+                        this.data = response.data;
+                        return response;
+                    }
+                )
+        }
+        let model = new Model({
+            data: {
+                name: '',
+                number: 0,
+                id: ''
+            },
+            resource: 'books'
+        })
+        let view = new Vue({
+            el: '#app',
+            data: {
+                book: {
+                    name: 'sss',
+                    number: 0,
+                    id: ''
+                },
+                n: 1,
+                show: false,
+                // 
+                transformValue: '',
+                imgs: ['/x', '/y', '/z'],
+
+            },
+            template: `  
+            <div>
+                <div>
+                书名：{{book.name}} 数量：
+                <span id="number">{{book.number}}</span>
+            </div>
+            <div>
+                <input v-model="n" type="number" />    
+            </div>
+            <div>
+                <button v-on:click="addOne">加{{n}}</button>
+                <button v-on:click="minusOne">减{{n}}</button>
+                <button v-on:click="reset">归零</button>
+            </div>
+            <hr/>
+            <button v-on:click="toggle">点我toggle</button>
+            <span v-if="show">你好</span>
+            <hr/>
+                <div>
+                    <div class="window">
+                        <div class="slides" :style="{transform:transformValue}">
+                            <img v-for="url in imgs" :src="url"/>
+                        </div>
+                    </div>  
+                    <button v-on:click="go(i)" v-for="(v,i) in imgs">{{i+1}}</button>
+                </div>
+            </div>
+            `,
+
+            methods: {
+                go(index) {
+                    this.transformValue = `translateX(${-100 * index}px)`
+                },
+                toggle() {
+                    this.show = !this.show
+                },
+                addOne() {
+                    model.update(1, { number: this.book.number + parseInt(this.n) }).then(
+                        () => {
+                            console.log(model)
+                            this.book = model.data;
+                        }
+                    )
+                },
+                minusOne() {
+
+                    model.update(1, { number: this.book.number + parseInt(this.n) }).then(
+                        ({ data }) => {
+                            this.book = model.data;
+                        }
+                    )
+                },
+                reset() {
+                    model.update(1, { number: 0 }).then(
+                        ({ data }) => {
+                            this.n = 0;
+                            this.book = model.data;
+                        }
+                    )
+                },
+            },
+            created() {
+                model.fetch(1).then(() => {
+                    this.book = model.data;
+                })
+            },
+
+        });
+        mockRequest();
+        function mockRequest() {
+            //添加响应拦截器
+            axios.interceptors.response.use(function (response) {
+                //对响应数据做些事
+                let { config: { url, method, data } } = response;
+                if (url === '/books/1' && method === 'get') {
+                    return response;
+                } else if (url === '/books/1' && method === 'put') {
+                    response.data = Object.assign(response.data, JSON.parse(data));
+                    return response;
+                }
+                // return response;
+            }, function (error) {
+                //请求错误时做些事
+                return Promise.reject(error);
+            });
+        }
+    </script>
+</body>
+
+</html>

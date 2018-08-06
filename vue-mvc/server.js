@@ -38,19 +38,10 @@ var server = http.createServer(function (request, response) {
 		);
 		response.end();
 
-	} else if (path === '/xxx') {
-		response.statusCode = 200;
-		response.setHeader('Content-Type', 'text/xml');
-		response.write(`
-		{
-			"age":18,
-			"name":"lichao",
-			"skills":[
-				{"12":"234"},
-				{"1qwe2":"23asd4"}
-			]
-		}
-		`);
+	} else if (path === '/use-vue') {
+		let str = fs.readFileSync('./use-vue.html', 'utf-8');
+		response.setHeader('Content-Type', 'text/html;charset=utf-8');
+		response.write(str);
 		response.end();
 	} else if (path === '/sign-up' && method === 'GET') {
 		let str = fs.readFileSync('./sign-up.html', 'utf-8');

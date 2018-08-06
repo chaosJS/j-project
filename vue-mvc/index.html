@@ -12,36 +12,55 @@
     <div id="app">
 
     </div>
+
+    <a href="/use-vue" target="_blank">使用vue</a>
     <script src="https://cdn.bootcss.com/axios/0.18.0/axios.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
     <script>   
 
-        let model = {
+        function Model(options) {
+            this.data = options.data;
+            this.resource = options.resource;
+        }
+        Model.prototype.fetch = function (id) {
+            return axios.get(`/${this.resource}/${id}`)
+                .then(
+                    (response) => {
+                        this.data = response.data;
+                        return response;
+                    }
+                )
+        }
+        Model.prototype.update = function (id, newData) {
+            return axios.put(`/${this.resource}/${id}`, newData)
+                .then(
+                    (response) => {
+                        this.data = response.data;
+                        return response;
+                    }
+                )
+        }
+        function View(options) {
+            this.el = options.el;
+            this.template = options.template;
+        }
+        View.prototype.render = function (data) {
+            let renderedHtml = this.template;
+            for (let key in data) {
+                renderedHtml = renderedHtml.replace(`__${key}__`, data[key]);
+            }
+            $(this.el).html(renderedHtml)
+        }
+
+        let model = new Model({
             data: {
                 name: '',
                 number: 0,
                 id: ''
             },
-            fetch(id) {
-                return axios.get(`/books/${id}`)
-                    .then(
-                        (response) => {
-                            this.data = response.data;
-                            return response;
-                        }
-                    )
-            },
-            update(id, newData) {
-                return axios.put(`/books/${id}`, newData)
-                    .then(
-                        (response) => {
-                            this.data = response.data;
-                            return response;
-                        }
-                    )
-            }
-        }
-        let view = {
+            resource: 'books'
+        })
+        let view = new View({
             el: '#app',
             template: `  
             <div>
@@ -53,11 +72,7 @@
                 <button id="minusOne">减一</button>
                 <button id="reset">归零</button>
             </div>`,
-            render(data) {
-                let renderedHtml = this.template.replace('__name__', data.name).replace('__number__', data.number);
-                $(this.el).html(renderedHtml)
-            }
-        }
+        });
 
         let controller = {
             init({ view, model }) {
