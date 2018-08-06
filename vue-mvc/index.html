@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>view-mvc</title>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            书名：《javascript高级程序设计》 数量：
+            <span id="number">2</span>
+        </div>
+        <div>
+            <button id="addOne">加1</button>
+            <button id="minusOne">减一</button>
+            <button id="reset">归零</button>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/axios/0.18.0/axios.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script>   
+        //添加响应拦截器
+        axios.interceptors.response.use(function (response) {
+            //对响应数据做些事
+            console.log(response)
+            return response;
+        }, function (error) {
+            //请求错误时做些事
+            return Promise.reject(error);
+        });
+        axios.get('/books/1').then(
+            (resp) => { console.log(resp) }
+
+        )
+        $('#app').on('click', '#addOne', () => {
+            var oldNum = $('#number').text();
+            var newNum = oldNum - 0 + 1;
+            $('#number').text(newNum)
+        })
+
+        $('#app').on('click', '#minusOne', () => {
+            var oldNum = $('#number').text();
+            var newNum = oldNum - 0 - 1;
+            $('#number').text(newNum)
+        })
+
+        $('#app').on('click', '#reset', () => {
+            $('#number').text(0)
+        })
+
+
+
+    </script>
+</body>
+
+</html>
