@@ -31,3 +31,24 @@
 11. 最后总结：先有Object.prototype（原型链顶端），
 	然后Function.prototype继承Object.prototype而产生，
 	最后，Function构造函数和Object构造函数和其它构造函数继承Function.prototype而产生。
+
+
+-----------------------------------------
+ect:
+
+let fn = {};
+fn.name= 'fn';
+fn.params=['x','y'];
+fn.fbody='return x+y';
+fn.call = function(){
+	return eval(fn.fbody)
+}
+1. 函数的本质就是可以执行代码的对象
+2. fn()只是语法糖，本质是fn.call(),对象调用自身的call/apply方法
+3. fn.call(undefined,x,y);
+	1. call的第一个参数可以用this得到，let f = function(){console.log(this)};
+		在严格模式下 调用f函数：f.call() call方法的第一个参数就是this 
+	2. call的后面的参数可以用arguments关键字得到  let f = function(){console.log(arguments)};
+		调用f.call(undefined,1,2,3) call方法第一个参数之后的参数就是arguments
+4. 作用域：只有全局作用域和局部作用域（函数作用域）本质上是一个树(tree) ,根是全局作用域，一个函数创建一个函数作用域
+5. 函数使用了范围外的变量，那么，这个函数+这个变量  就是闭包
