@@ -28,29 +28,29 @@
           </li>
           <li>
             <a href="#siteWorks">作品</a>
-            <ul class="subMenu">
+            <!-- <ul class="subMenu">
               <li>作品 1</li>
               <li>作品 2</li>
               <li>作品 3</li>
-            </ul>
+            </ul> -->
           </li>
           <li>
             <a href="">博客</a>
-            <ul class="subMenu">
+            <!-- <ul class="subMenu">
               <li>作品 1</li>
               <li>作品 2</li>
               <li>作品 3</li>
-            </ul>
+            </ul> -->
           </li>
-          <li>
+          <!-- <li>
             <a href="">日历</a>
-          </li>
+          </li> -->
           <li>
             <a href="#">联系方式</a>
           </li>
-          <li>
+          <!-- <li>
             <a href="#">其他</a>
-          </li>
+          </li> -->
         </ul>
       </nav>
     </div>
@@ -231,7 +231,7 @@
 
 
   </section>
-
+  <script src="https://unpkg.com/scrollreveal"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.1.0/js/swiper.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/17.2.0/Tween.min.js"></script>
   <!-- 存储服务 -->
@@ -249,6 +249,29 @@
   <script src="./js/module-2.js"></script>
   <script src="./js/my-promise.js"></script>
 
+  <script>
+    var config = {
+      duration: 400,
+      // 延迟时间
+      delay: 500,
+      // 动画开始的位置，'bottom', 'left', 'top', 'right'
+      origin: 'bottom',
+      // 回滚的时候是否再次触发动画
+      reset: false,
+      // 在移动端是否使用动画
+      mobile: false,
+      // 滚动的距离，单位可以用%，rem等
+      distance: '200px',
+      // 其他可用的动画效果
+      opacity: 0.001,
+      easing: 'linear',
+      scale: 0.9,
+    };
+    ScrollReveal().reveal('.pictureAndText', config);
+    ScrollReveal().reveal('.skills', config);
+    ScrollReveal().reveal('.portfolio', config);
+
+  </script>
 </body>
 
 </html>

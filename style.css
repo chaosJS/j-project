@@ -47,9 +47,9 @@ ul,li{
 .loading::after {
   animation-delay: 0.75s;
 }
-[data-x].offset{
+/* [data-x].offset{
 transform: translateY(200px);
-}
+} */
 [data-x]{
   transform: translateY(0px);
   transition: all .2s;

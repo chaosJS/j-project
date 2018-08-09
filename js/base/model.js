@@ -13,6 +13,10 @@ window.Model = function (options) {
         },
         fetch: function () {
             var query = new AV.Query(resourceName);
+
+            query.lessThanOrEqualTo('createdAt', new Date());
+            query.descending('createdAt');
+            query.limit(5);
             return query.find();//返回一个promise对象
         },
         save: function (obj) {
