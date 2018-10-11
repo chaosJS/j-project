@@ -159,29 +159,44 @@
     <div id="mySlides">
       <ul>
         <li>
-          <a href="https://chaosjs.github.io/j-project/site-nav/">
+          <a href="https://chaosjs.github.io/vue-cnode/dist/index.html#/" target="_blank">
+            <img src="./img/works/cnode.jpg" alt="">
+            <p>CNODE社区</p>
+          </a>
+        </li>
+        <li>
+          <a href="https://chaosjs.github.io/music-163/src/index.html" target="_blank">
+            <img src="./img/works/music-163.jpg" alt="">
+            <p>简易网易云音乐</p>
+          </a>
+        </li>
+        <li>
+          <a href="https://chaosjs.github.io/j-project/site-nav/" target="_blank">
             <img src="./img/works/nav-site.jpg" alt="">
+            <p>网站导航</p>
           </a>
         </li>
         <li>
-          <a href="https://chaosjs.github.io/j-project/canvas-demo/index.html">
+          <a href="https://chaosjs.github.io/j-project/canvas-demo/index.html" target="_blank">
             <img src="./img/works/canvas.jpg" alt="">
+            <p>简易画板</p>
+
           </a>
         </li>
         <li>
-          <a href="https://chaosjs.github.io/j-project/carousel-slide/apple-like-slide/index.html">
+          <a href="https://chaosjs.github.io/j-project/carousel-slide/apple-like-slide/index.html" target="_blank">
             <img src="./img/works/apple-style.jpg" alt="">
+            <p>苹果风格轮播</p>
           </a>
         </li>
         <li>
-          <img src="./img/works/nav-site.jpg" alt="">
+          <a href="https://chaosjs.github.io/j-project/animate-pikachu/index.html" target="_blank">
+            <img src="./img/works/pikaqiu.jpg" alt="">
+            <p>皮卡丘动画</p>
+          </a>
         </li>
-        <li>
-          <img src="./img/works/canvas.jpg" alt="">
-        </li>
-        <li>
-          <img src="./img/works/apple-style.jpg" alt="">
-        </li>
+
+
       </ul>
       <!-- <div class="swiper-container">
         <div class="swiper-wrapper">
@@ -206,14 +221,67 @@
 
 
     <div id="msg-container">
+      <h2>留言板</h2>
+
       <ol id="msgList">
 
       </ol>
-      <form id="postMessage">
-        <input type="text" name="content" placeholder="留言">
-        <input type="text" name="name" placeholder="姓名">
+      <style>
+        .input_control {
+          width: 360px;
+          margin: 20px auto;
+        }
 
-        <input type="submit" value="提交">
+        input[type="text"],
+        #btn1,
+        #btn2 {
+          box-sizing: border-box;
+          text-align: center;
+          font-size: 1em;
+          height: 2.7em;
+          border-radius: 4px;
+          border: 1px solid #c8cccf;
+          color: #6a6f77;
+          -web-kit-appearance: none;
+          -moz-appearance: none;
+          display: block;
+          outline: 0;
+          padding: 0 1em;
+          text-decoration: none;
+          width: 100%;
+        }
+
+        input[type="text"]:focus {
+          border: 1px solid #299982;
+        }
+
+        #submit-btn {
+          font-size: 14px;
+          line-height: 16px;
+          padding: 15px 45px;
+          border: 1px solid #cdcfd1;
+          background: #fff;
+          display: inline-block;
+          border-radius: 2px;
+          color: #3d4451;
+          font-weight: bold;
+          margin: 10px 0;
+          cursor: pointer;
+          transition: box-shadow 0.2s;
+        }
+      </style>
+      <form id="postMessage">
+        <div class="input_control">
+          <input type="text" class="form_input" name="content" placeholder="请在此输入留言..." />
+        </div>
+        <!-- <input type="text" name="content" placeholder="留言"> -->
+
+        <div class="input_control">
+          <input type="text" class="form_input" name="name" placeholder="请在此留下姓名..." />
+        </div>
+        <!-- <input type="text" name="name" placeholder="姓名"> -->
+
+        <input type="submit" value="提交" id="submit-btn">
       </form>
     </div>
 

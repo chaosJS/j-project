@@ -16,7 +16,7 @@
                             let array = message.map((item) => item.attributes);
                             array.forEach(element => {
                                 let li = document.createElement('li');
-                                li.innerText = element.name + ':  ' + element.content;
+                                li.innerText = element.name + '留言说: ' + element.content;
                                 this.messageList.appendChild(li);
                             });
                         },
@@ -39,7 +39,7 @@
                         (object) => {
                             // window.location.reload()
                             let li = document.createElement('li');
-                            li.innerText = object.attributes.name + ':' + object.attributes.content;
+                            li.innerText = object.attributes.name + '留言说: ' + object.attributes.content;
                             // console.log(this)
                             this.messageList.appendChild(li);
                             this.view.querySelector('input[name=content]').value = '';

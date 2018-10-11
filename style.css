@@ -470,6 +470,16 @@ section.portfolio .works > .small {
   /* padding: 42px 50px 10px; */
   margin-top: 30px;
 }
+#msg-container{
+  margin-top: 60px;
+}
+#msg-container>h2{
+  text-align: center;
+  color: #3d4451;
+  font-size: 34px;
+  line-height: 1.2;
+  font-weight: 600;
+}
 #mySlides img{
   width: 100%;
 }
@@ -477,6 +487,7 @@ section.portfolio .works > .small {
     display: flex;
      align-items: center;
      flex-wrap: wrap;
+     padding: 1rem 2rem;
 }
 #mySlides>ul>li{
   box-sizing: border-box;
